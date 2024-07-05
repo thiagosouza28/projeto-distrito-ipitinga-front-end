@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preenchimento de Ata de Reunião</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Preenchimento de Ata de Reunião</h1>
+        <form id="formAta">
+            <label for="titulo">Selecionar Título:</label>
+            <select id="selectTitulo" name="titulo" required>
+                <option value="" disabled selected>Selecione um título...</option>
+                <!-- Opções serão preenchidas dinamicamente via JavaScript -->
+            </select>
+            <label for="corpo">Corpo do Texto:</label>
+            <textarea id="corpo" name="corpo" rows="10" required></textarea>
+            <div class="substituicoes" id="substituicoes">
+                <!-- Aqui serão adicionadas caixas de texto dinamicamente -->
+            </div>
+            <button type="submit">Salvar Ata</button>
+        </form>
+
+        <div id="mensagem" class="mensagem"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            carregarTitulos();
+        });
+
+        async function carregarTitulos() {
+            try {
+                const response = await fetch('/titulos');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar títulos');
+                }
+                const titulos = await response.json();
+                const selectTitulo = document.getElementById('selectTitulo');
+                selectTitulo.innerHTML = ''; // Limpa as opções antes de adicionar novas
+                titulos.forEach(titulo => {
+                    const option = document.createElement('option');
+                    option.value = titulo.id;
+                    option.textContent = titulo.titulo;
+                    selectTitulo.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar títulos:', error);
+                exibirMensagemErro('Erro ao carregar títulos');
+            }
+        }
+
+        document.getElementById('selectTitulo').addEventListener('change', async function () {
+            const tituloId = this.value;
+            if (!tituloId) return;
+
+            try {
+                const response = await fetch(`/titulos/${tituloId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar título selecionado');
+                }
+                const titulo = await response.json();
+                document.getElementById('corpo').value = titulo.corpo;
+
+                // Limpar as substituições anteriores
+                const substituicoesContainer = document.getElementById('substituicoes');
+                substituicoesContainer.innerHTML = '';
+
+                // Criar caixas de texto para cada substituição encontrada
+                const regex = /\+(\w+)\+/g;
+                let match;
+                while ((match = regex.exec(titulo.corpo))!== null) {
+                    const variavel = match[1];
+                    const label = document.createElement('label');
+                    label.textContent = `Substituir +${variavel}+:`;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = variavel;
+                    input.required = true;
+                    substituicoesContainer.appendChild(label);
+                    substituicoesContainer.appendChild(input);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar título selecionado:', error);
+                exibirMensagemErro('Erro ao carregar título selecionado');
+            }
+        });
+
+        document.getElementById('formAta').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const tituloId = formData.get('titulo');
+            const corpo = formData.get('corpo');
+            const substituicoes = {};
+
+            // Obter valores das caixas de texto de substituição
+            document.querySelectorAll('#substituicoes input').forEach(input => {
+                if (input.value === '') {
+                    exibirMensagemErro('Preencha todos os campos de substituição');
+                    return;
+                }
+                substituicoes[input.name] = input.value;
+            });
+
+            // Substituir as variáveis no corpo do texto
+            let corpoFinal = corpo;
+            Object.entries(substituicoes).forEach(([variavel, valor]) => {
+                corpoFinal = corpoFinal.replace(new RegExp(`\\+${variavel}\\+`, 'g'), valor);
+            });
+
+            try {
+                const response = await fetch('/cadastrotitulosreuniao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tituloId, corpo: corpoFinal })
+                });
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar ata');
+                }
+                const data = await response.json();
+                exibirMensagemSucesso(`Ata salva com sucesso! ID: ${data.id}`);
+                this.reset();
+            } catch (error) {
+                console.error('Erro ao salvar ata:', error);
+                exibirMensagemErro('Erro ao salvar ata');
+            }
+        });
+
+        function exibirMensagemSucesso(mensagem) {
+            const mensagemElement = document.getElementById('mensagem');
+            mensagemElement.innerHTML = mensagem;
+            mensagemElement.className = 'ensagem success';
+        }
+
+        function exibirMensagemErro(mensagem) {
+            const mensagemElement = document.getElementById('mensagem');
+            mensagemElement.innerHTML = mensagem;
+            mensagemElement.className = 'ensagem error';
+        }
+    </script>
+
+</body>
+
+</html>
