@@ -7,7 +7,7 @@
 
 body{
     min-height: 100vh;
-    background-image: url("/projeto-distrito-ipitinga-front-end/src/img/fundo.jpg");
+    background-image: url("https://github.com/thiagosouza28/projeto-distrito-ipitinga-front-end/blob/main/src/img/fundo.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;  
