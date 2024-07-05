@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Criaturas</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Criaturas</h1>
+        <form id="formCriatura">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="sigla">Sigla:</label>
+            <textarea id="sigla" name="sigla" rows="6" required></textarea>
+            
+            <button type="submit">Salvar Sigla</button>
+        </form>
+
+        <div id="mensagem" class="mensagem"></div>
+    </div>
+
+    <script>
+        document.getElementById('formCriatura').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const titulo = formData.get('titulo');
+            const sigla = formData.get('sigla');
+
+            fetch('/cadastronomecraturas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ titulo, sigla })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const mensagemElement = document.getElementById('mensagem');
+                if (data.id) {
+                    mensagemElement.innerHTML = `Criatura salva com sucesso! ID: ${data.id}`;
+                    document.getElementById('formCriatura').reset();
+                    mensagemElement.className = 'mensagem success';
+                } else {
+                    mensagemElement.innerHTML = `Erro ao salvar criatura: ${data.error}`;
+                    mensagemElement.className = 'mensagem error';
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                const mensagemElement = document.getElementById('mensagem');
+                mensagemElement.innerHTML = 'Erro ao comunicar com o servidor';
+                mensagemElement.className = 'mensagem error';
+            });
+        });
+    </script>
+</body>
+</html>
