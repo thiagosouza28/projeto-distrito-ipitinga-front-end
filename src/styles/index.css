@@ -3,13 +3,11 @@
 * {
     margin: 0;
     padding: 0;
-    background-image: url("../img/fundo.jpg");
 }
 
 body{
     min-height: 100vh;
-    
-    background-size: cover;
+    background-image: url("../img/fundo.jpg");
     background-repeat: no-repeat;
     background-position: center;  
     font-family: "Poppins";  
@@ -96,14 +94,16 @@ nav a{
     color: #fff;
     flex-direction: column;
     text-align: center;    
+    padding: 5px;
+    
 }
 
 .content p{    
     max-width: 400px;
+    
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.5);
     text-align: center;
     padding: 20px 0;
 }
