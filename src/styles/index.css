@@ -12,9 +12,11 @@
 body {
     min-height: 100vh;
     background-image: url("../img/fundo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
     font-family: 'Poppins', sans-serif;
-    color: #fff;
+    color: #000000;
 }
 
 /* Estilo da navegação */
@@ -47,17 +49,17 @@ nav a {
     text-decoration: none;
     display: flex;
     align-items: center;
-    color: #fff;
+    color: #000000;
     transition: color 0.3s ease;
 }
 
 nav a:hover {
-    color: #ddd;
+    color: #000000;
 }
 
 /* Estilo do ícone */
 .icon {
-    fill: #fff;
+    fill: #000000;
 }
 
 /* Estilo do logotipo */
@@ -102,8 +104,8 @@ nav a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
-    color: #fff;
+    height: 100vh;
+    color: #000000;
     flex-direction: column;
     text-align: center;
     padding: 20px;
@@ -125,11 +127,11 @@ footer {
     max-width: 1000px;
     margin: 0 auto;
     padding: 10px;
-    color: #fff;
+    color: #000000;
 }
 
 .footer-content a {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     margin: 0 10px;
     transition: text-decoration 0.3s ease;
