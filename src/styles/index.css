@@ -24,9 +24,11 @@ body {
 section {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
     padding: 150px 10px;
     flex-direction: row; /* Alinhamento padrão: imagem ao lado do texto */
+    text-align: left;
+    width: 100%; /* Garante que a seção ocupe toda a largura */
 }
 
 .logoano img {
@@ -119,11 +121,13 @@ nav a:hover {
         flex-direction: column; /* Alinha a imagem acima do texto no mobile */
         padding: 20px; /* Ajusta o padding para dispositivos móveis */
         text-align: center; /* Centraliza o texto para dispositivos móveis */
+        justify-content: center; /* Centraliza verticalmente no mobile */
     }
 
     .logoano img {
         margin-right: 0; /* Remove o espaçamento lateral da imagem no mobile */
-        margin-bottom: 10px; /* Adiciona um espaçamento inferior entre a imagem e o texto */
+        margin-bottom: 20px; /* Adiciona um espaçamento inferior entre a imagem e o texto */
+        max-width: 100%; /* Garante que a imagem ocupe toda a largura no mobile */
     }
 
     .hideMobile {
