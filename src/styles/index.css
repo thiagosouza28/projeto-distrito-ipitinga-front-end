@@ -37,7 +37,7 @@ section {
     padding: 150px 10px;
     flex-direction: row; /* Alinhamento padrão: imagem ao lado do texto */
     text-align: left;
-    width: 90%; /* Garante que a seção ocupe toda a largura */
+    width: 100%; /* Garante que a seção ocupe toda a largura */
 }
 
 .logoano img {
