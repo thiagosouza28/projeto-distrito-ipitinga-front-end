@@ -17,6 +17,26 @@ body {
     color: #000000;
     margin: 0;
     padding: 0;
+    background-color: #000000;
+}
+
+/* Estilo da seção que contém a imagem e o texto */
+section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 150px 10px;
+}
+
+.logoano img {
+    max-width: 500px; /* Ajuste o tamanho da imagem conforme necessário */
+    margin-right: 10px; /* Espaçamento entre a imagem e o texto */
+}
+
+section h1 {
+    font-size: 18px; /* Ajuste o tamanho da fonte conforme necessário */
+    line-height: 1.5;
+    color: #ffffff; /* Cor do texto */
 }
 
 /* Estilo da navegação */
@@ -55,14 +75,13 @@ nav a {
     text-decoration: none;
     display: flex;
     align-items: center;
-    color: #000000;
+    color: #ffffff;
     transition: color 0.3s ease;
 }
 
 nav a:hover {
     color: #000000;
 }
-
 
 /* Estilo do ícone */
 .icon {
@@ -134,11 +153,11 @@ footer {
     max-width: 1000px;
     margin: 0 auto;
     padding: 10px;
-    color: #000000;
+    color: #ffffff;
 }
 
 .footer-content a {
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
     margin: 0 10px;
     transition: text-decoration 0.3s ease;
