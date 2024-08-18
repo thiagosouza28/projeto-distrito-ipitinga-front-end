@@ -23,7 +23,7 @@ body {
 
 /* Classe para alterar a cor de fundo da navegação ao rolar */
 nav.scrolled {
-    background-color: #8275fc; /* Cor de fundo quando a página é rolada */
+    background-color: #000000; /* Cor de fundo quando a página é rolada */
     transition: background-color 0.3s ease; /* Transição suave da cor */
 }
 
