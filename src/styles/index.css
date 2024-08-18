@@ -33,7 +33,6 @@ section {
     display: flex;
     align-items: center;
     justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    
     padding: 150px 10px;
     flex-direction: row; /* Alinhamento padrão: imagem ao lado do texto */
     text-align: left;
@@ -136,7 +135,6 @@ nav a:hover {
     .logoano img {
         margin-right: 500px; /* Remove o espaçamento lateral da imagem no mobile */
         margin-bottom: 20px; /* Adiciona um espaçamento inferior entre a imagem e o texto */
-        margin-top: 50px;
         max-width: 100%; /* Garante que a imagem ocupe toda a largura no mobile */
     }
 
